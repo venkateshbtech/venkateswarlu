@@ -1,0 +1,56 @@
+package talentify;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+public class Login {
+
+	FirefoxDriver driver;
+	
+	@BeforeTest()
+	
+	public void login()
+	{
+		driver=new FirefoxDriver();
+		driver.get("http://talentify.in:8999/content/");
+		driver.manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
+	}
+	@Test()
+	public void setup()
+	{
+		driver.findElement(By.name("email")).sendKeys("abhinav1@istarindia.com");
+		driver.findElement(By.name("password")).sendKeys("test123");
+		driver.findElement(By.xpath("//button[.='Login']")).click();
+		//driver.findElement(By.xpath("html/body/div[1]/div/form/button")).click();
+		
+		Select drop=new Select(driver.findElement(By.className("caret")));
+		drop.selectByVisibleText("Lesson(s)");
+		driver.findElement(By.id("create_lessonzz")).click();
+		Select drop1=new Select(driver.findElement(By.id("lesson_type_idd")));
+		drop1.selectByVisibleText("PRESENTATION Lesson");
+		driver.findElement(By.id("lesson_name_idd")).sendKeys("Venky Test");
+		driver.findElement(By.id("lesson_desc_idd")).sendKeys("webelement");
+		driver.findElement(By.id("lesson_duration_idd")).sendKeys("5");
+		
+		//driver.findElement(By.xpath("//*[@id='wizard']/div[3]/ul/li[2]/a")).click();
+		driver.findElement(By.xpath("//a[.='Next']")).click();
+		driver.findElement(By.xpath("//a[.='Next']")).click();
+		driver.findElement(By.xpath("//a[.='Next']")).click();
+		driver.findElement(By.xpath("//*[@id='wizard']/div[3]/ul/li[3]/a")).click();
+		driver.findElement(By.xpath("//*[@id='navbar']/ul[1]/li[1]/a")).click();
+		
+		
+	}
+	@AfterTest()
+	public void close()
+	{
+		driver.close();
+	}
+	
+}
